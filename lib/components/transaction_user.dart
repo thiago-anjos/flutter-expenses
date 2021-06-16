@@ -21,24 +21,6 @@ class _TransactionUser extends State<StatefulWidget> {
         id: 't2', title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
     Transaction(
         id: 't3', title: 'Conta de aguas', value: 56, date: DateTime.now()),
-    Transaction(
-        id: 't1',
-        title: 'Novo tênis de corrida',
-        value: 310.76,
-        date: DateTime.now()),
-    Transaction(
-        id: 't2', title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
-    Transaction(
-        id: 't3', title: 'Conta de aguas', value: 56, date: DateTime.now()),
-    Transaction(
-        id: 't1',
-        title: 'Novo tênis de corrida',
-        value: 310.76,
-        date: DateTime.now()),
-    Transaction(
-        id: 't2', title: 'Conta de Luz', value: 211.30, date: DateTime.now()),
-    Transaction(
-        id: 't3', title: 'Conta de aguas', value: 56, date: DateTime.now()),
   ];
 
   _addTransaction(String title, double value) {
