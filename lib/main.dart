@@ -9,7 +9,10 @@ main() => runApp(ExpensesApp());
 class ExpensesApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: MyHomePage());
+    return MaterialApp(
+      home: MyHomePage(),
+      theme: ThemeData(primarySwatch: Colors.purple, accentColor: Colors.amber),
+    );
   }
 }
 
