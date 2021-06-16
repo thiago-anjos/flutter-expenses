@@ -49,6 +49,8 @@ class _MyHomePage extends State<StatefulWidget> {
     setState(() {
       _transactions.add(newTransaction);
     });
+
+    Navigator.of(context).pop();
   }
 
   @override
