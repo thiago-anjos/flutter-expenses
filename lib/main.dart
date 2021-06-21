@@ -16,6 +16,11 @@ class ExpensesApp extends StatelessWidget {
           primarySwatch: Colors.purple,
           accentColor: Colors.amber,
           fontFamily: 'Cairo',
+          elevatedButtonTheme: ElevatedButtonThemeData(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.blue,
+            ),
+          ),
           textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
                   fontFamily: 'Cairo', fontSize: 16, color: Colors.blue)),
@@ -36,21 +41,22 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePage extends State<StatefulWidget> {
   final List<Transaction> _transactions = [
-    Transaction(
-        id: 't1',
-        title: 'Novo tênis de corrida',
-        value: 100,
-        date: DateTime.now().subtract(Duration(days: 0))),
-    Transaction(
-        id: 't2',
-        title: 'Conta de Luz',
-        value: 20,
-        date: DateTime.now().subtract(Duration(days: 1))),
-    Transaction(
-        id: 't3',
-        title: 'Conta de aguas',
-        value: 30,
-        date: DateTime.now().subtract(Duration(days: 2))),
+    // Transaction(
+    //     id: 't1',
+    //     title: 'Novo tênis de corrida',
+    //     value: 100,
+    //     date: DateTime.now().subtract(Duration(days: 2))),
+    // Transaction(
+    //     id: 't2',
+    //     title: 'Conta de Luz',
+    //     value: 20,
+    //     date: DateTime.now().subtract(Duration(days: 1))),
+    // Transaction(
+    //     id: 't3',
+    //     title: 'Conta de aguas',
+    //     value: 30,
+    //     date: DateTime.now().subtract(Duration(days: 2))),
+    // Transaction(id: 't4', title: 'Convenio', value: 400, date: DateTime.now()),
   ];
 
   List<Transaction> get _recentTransactions {
@@ -61,18 +67,19 @@ class _MyHomePage extends State<StatefulWidget> {
 
   _openTransactionFormModal(BuildContext context) {
     showModalBottomSheet(
-        context: context,
-        builder: (_) {
-          return TransactionForm(_addTransaction);
-        });
+      context: context,
+      builder: (_) {
+        return TransactionForm(_addTransaction);
+      },
+    );
   }
 
-  _addTransaction(String title, double value) {
+  _addTransaction(String title, double value, DateTime date) {
     final newTransaction = Transaction(
         id: Random().nextDouble().toString(),
         title: title,
         value: value,
-        date: DateTime.now());
+        date: date);
 
     setState(() {
       _transactions.add(newTransaction);
