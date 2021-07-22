@@ -80,63 +80,65 @@ class _MyHomePage extends State<StatefulWidget> {
     });
   }
 
+  // criar botão para IOS e Android
+  Widget _getIconButton(IconData icon, VoidCallback fn) {
+    return Platform.isIOS
+        ? GestureDetector(
+            onTap: fn,
+            child: Icon(icon),
+          )
+        : IconButton(icon: Icon(icon), onPressed: fn);
+  }
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
     bool isLandscape = mediaQuery.orientation == Orientation.landscape;
 
+    final iconList = Platform.isIOS ? CupertinoIcons.refresh : Icons.list;
+    final chartIcon =
+        Platform.isIOS ? CupertinoIcons.refresh : Icons.show_chart;
+
     final actions = <Widget>[
       if (isLandscape)
-        IconButton(
-            onPressed: () {
-              setState(() {
-                _showChart = !_showChart;
-              });
-            },
-            icon: Icon(_showChart ? Icons.list : Icons.pie_chart)),
-      IconButton(
-          onPressed: () => _openTransactionFormModal(context),
-          icon: Icon(Icons.add)),
+        _getIconButton(_showChart ? iconList : chartIcon, () {
+          setState(() {
+            _showChart = !_showChart;
+          });
+        }),
+      _getIconButton(
+        Platform.isIOS ? CupertinoIcons.add : Icons.add,
+        () => _openTransactionFormModal(context),
+      )
     ];
 
-    final PreferredSizeWidget appBar = Platform.isIOS
-        ? CupertinoNavigationBar(
-            middle: Text('Gereciamento Financeiro'),
-            trailing: Row(
-              children: actions,
-            ),
-          )
-        : AppBar(
-            title: Text(
-              'Gerenciamento Financeiro',
-              style: TextStyle(fontSize: 20 * mediaQuery.textScaleFactor),
-            ),
-            actions: actions,
-          );
+    final titleAppBar = 'Gerenciamento Financeiro';
+
+    final PreferredSizeWidget appBar = AppBar(
+      title: Text(
+        titleAppBar,
+        style: TextStyle(fontSize: 20 * mediaQuery.textScaleFactor),
+      ),
+      actions: actions,
+    );
+
+    final appBarCupertino = CupertinoNavigationBar(
+      middle: Text(titleAppBar),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: actions,
+      ),
+    );
 
     final availabelHeight = mediaQuery.size.height -
         appBar.preferredSize.height -
         mediaQuery.padding.top;
 
-    final bodyPage = SingleChildScrollView(
+    final bodyPage = SafeArea(
+        child: SingleChildScrollView(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // if (isLandscape)
-          //   Row(
-          //     mainAxisAlignment: MainAxisAlignment.center,
-          //     children: [
-          //       Text('Exibir gráfico'),
-          //       Switch.adaptive(
-          //           activeColor: Theme.of(context).accentColor,
-          //           value: _showChart,
-          //           onChanged: (value) {
-          //             setState(() {
-          //               _showChart = value;
-          //             });
-          //           }),
-          //     ],
-          //   ),
           if (_showChart || !isLandscape)
             Container(
                 height: availabelHeight * (isLandscape ? 0.8 : 0.3),
@@ -147,12 +149,12 @@ class _MyHomePage extends State<StatefulWidget> {
                 child: TransactionList(_transactions, _deleteTransaction)),
         ],
       ),
-    );
+    ));
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
             child: bodyPage,
-            navigationBar: appBar,
+            navigationBar: appBarCupertino,
           )
         : Scaffold(
             appBar: appBar,
