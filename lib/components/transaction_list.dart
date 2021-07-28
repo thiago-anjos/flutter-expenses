@@ -14,12 +14,12 @@ class TransactionList extends StatelessWidget {
         ? LayoutBuilder(builder: (ctx, constraints) {
             return Column(
               children: [
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Text(
                   'Nenhuma transaçao cadastrada',
                   style: Theme.of(context).textTheme.headline6,
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Container(
                   height: constraints.maxHeight * 0.6,
                   child: Image.asset(
@@ -52,12 +52,14 @@ class TransactionList extends StatelessWidget {
                   subtitle: Text(DateFormat('d MMM y').format(tr.date)),
                   trailing: MediaQuery.of(context).size.width > 480
                       ? TextButton.icon(
-                          label: Text('Excluir'),
-                          icon: Icon(Icons.delete),
+                          label: const Text(
+                              'Excluir'), // posso marcar como constante porque esse valor de texto 'excluir' não será alterado em tempo de runtime
+                          icon: const Icon(Icons
+                              .delete), // é um valor conhecido que não será alterado
                           onPressed: () => onRemove(tr.id),
                         )
                       : IconButton(
-                          icon: Icon(Icons.delete),
+                          icon: const Icon(Icons.delete),
                           color: Theme.of(context).errorColor,
                           onPressed: () => onRemove(tr.id),
                         ),
